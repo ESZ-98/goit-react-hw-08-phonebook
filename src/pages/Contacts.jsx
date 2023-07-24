@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactApp from '../components/ContactApp';
+import ContactApp from '../components/ContactApp/ContactApp';
 import css from './Pages.module.css';
 
 const Contacts = () => {
