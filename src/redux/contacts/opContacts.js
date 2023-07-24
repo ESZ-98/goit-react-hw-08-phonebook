@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import api, { getPromiseData } from '../js/api';
+import api, { getPromiseData } from '../../js/apiUrl';
 
 export const fetchDisplayContacts = createAsyncThunk(
   'contacts/fetchAll',
@@ -37,6 +37,6 @@ const deleteContact = createAsyncThunk(
   }
 );
 
-const operations = { fetchDisplayContacts, postContactOnList, deleteContact };
+const opContacts = { fetchDisplayContacts, postContactOnList, deleteContact };
 
-export default operations;
+export default opContacts;

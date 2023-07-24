@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_ID = '64bc80237b33a35a44473891';
+const API_URL = 'connections-api';
 
 const errorHandler = error => {
   if (error.response.status === 400) {
@@ -23,30 +23,73 @@ const errorHandler = error => {
   console.log(error.config);
 };
 
-const mockApi = axios.create({
-  baseURL: `https://${API_ID}.mockapi.io/`,
+const contApi = axios.create({
+  baseURL: `https://${API_URL}.herokuapp.com`,
   timeout: 1000,
 });
 
-const mockApiGet = async () => {
-  const response = await mockApi
-    .get('/contacts')
-    .catch(error => errorHandler(error));
+const setAuthHeader = token =>
+  (contApi.defaults.headers.common['Authorization'] = `${token}`);
+
+const clearAuthHeader = () =>
+  (contApi.defaults.headers.common['Authorization'] = '');
+
+const contApiGet = async () => {
+  const response = await contApi.get('/contacts').catch(e => errorHandler(e));
   return response.data;
 };
 
-const mockApiPost = async data => {
-  const response = await mockApi
-    .post('/contacts/', data)
-    .catch(error => errorHandler(error));
+const contApiNew = async oBjNameNumber => {
+  const response = await contApi
+    .post('/contacts/', oBjNameNumber)
+    .catch(e => errorHandler(e));
   return response.data;
 };
 
-const mockApiDelete = async id => {
-  const response = await mockApi
-    .delete(`/contacts/${id}`)
-    .catch(error => errorHandler(error));
+const contApiUpdate = async (id, oBjNameNumber) => {
+  const response = await contApi
+    .patch(`/contacts/${id}`, oBjNameNumber)
+    .catch(e => errorHandler(e));
   return response;
+};
+
+const contApiDelete = async id => {
+  const response = await contApi
+    .delete(`/contacts/${id}`)
+    .catch(e => errorHandler(e));
+  return response;
+};
+
+const contApiUserCreate = async ObjNameEmailPass => {
+  const response = await contApi
+    .post('/users/signup', ObjNameEmailPass)
+    .catch(e => errorHandler(e));
+  setAuthHeader(response.data.token);
+  return response.data;
+};
+
+const contApiUserLogin = async ObjEmailPass => {
+  const response = await contApi
+    .post('/users/login', ObjEmailPass)
+    .catch(e => errorHandler(e));
+  setAuthHeader(response.data.token);
+  return response.data;
+};
+
+const contApiUserLogout = async () => {
+  const response = await contApi
+    .post('/users/logout')
+    .catch(e => errorHandler(e));
+  clearAuthHeader();
+  return response.data;
+};
+
+const contApiUserCurrent = async token => {
+  setAuthHeader(token);
+  const response = await contApi
+    .get('/users/current')
+    .catch(e => errorHandler(e));
+  return response.data;
 };
 
 export const getPromiseData = async promise =>
@@ -55,9 +98,14 @@ export const getPromiseData = async promise =>
   });
 
 const api = {
-  mockApiGet,
-  mockApiPost,
-  mockApiDelete,
+  contApiUserCreate,
+  contApiUserLogin,
+  contApiUserLogout,
+  contApiUserCurrent,
+  contApiGet,
+  contApiNew,
+  contApiDelete,
+  contApiUpdate,
   getPromiseData,
 };
 
