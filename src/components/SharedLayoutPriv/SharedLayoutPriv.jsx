@@ -15,16 +15,18 @@ const SharedLayoutPriv = () => {
 
   return (
     <>
-      <div className={css.headerSub}>
+      <div className={css.header_sub}>
         <NavLink
           to="/goit-react-hw-08-phonebook/contacts"
-          className={({ isActive }) => (isActive ? css.active : css.headerLink)}
+          className={({ isActive }) =>
+            isActive ? css.active : css.header_link
+          }
         >
           Phonebook
         </NavLink>
       </div>
-      <div className={css.headerSub}>
-        <p className={css.headerLink}>{user.email}</p>
+      <div className={css.header_sub}>
+        <p className={css.header_link}>{user.email}</p>
         <button type="button" onClick={buttonHandler}>
           Log out
         </button>

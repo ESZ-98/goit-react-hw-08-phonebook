@@ -10,7 +10,7 @@ const SharedLayout = () => {
   return (
     <>
       <header className={css.header}>
-        <nav className={css.headerNavigation}>
+        <nav className={css.header_navigation}>
           {isLoggedIn ? <SharedLayoutPriv /> : <SharedLayoutRest />}
         </nav>
       </header>
