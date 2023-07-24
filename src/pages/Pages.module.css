@@ -1,0 +1,11 @@
+.container {
+  margin: 0px 20px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.background {
+  background-color: wheat;
+  height: 100vh;
+}
