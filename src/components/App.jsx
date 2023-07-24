@@ -1,66 +1,61 @@
-import React, { useEffect } from 'react';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../redux/filterSlice';
-import selectors from '../redux/selectors';
-import operations from '../redux/operations';
-import { selectLoading, selectError } from '../redux/selectors';
+import React, { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import SharedLayout from './SharedLayout/SharedLayout';
+import PrivateRoute from '../js/PrivateRoute';
+import RestrictedRoute from '../js/RestrictedRoute';
+import Home from '../pages/Home';
+import opAuth from '../redux/auth/opAuth';
+import { useAuthRoute } from '../hook/useAuthRoute';
+
+const Register = lazy(() => import('../pages/Register'));
+const Login = lazy(() => import('../pages/Login'));
+const Contacts = lazy(() => import('../pages/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectors.getContacts);
-  const filter = useSelector(selectors.getFilter);
-  const error = useSelector(selectError);
-  const isLoading = useSelector(selectLoading);
-
-  const submitForm = ({ name, number }) => {
-    const newContact = { name, number, id: nanoid() };
-
-    if (contacts.some(contact => name === contact.name)) {
-      alert(`{$name} is already in contacts.`);
-      return;
-    }
-
-    dispatch(setFilter(newContact));
-  };
-
-  const changeFilter = event => {
-    dispatch(setFilter(event.target.value));
-  };
-
-  const deleteContact = id => {
-    dispatch(operations.deleteContact(id));
-  };
-
-  const getFilteredContacts = (contacts, filter) => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+  const { isRefreshing } = useAuthRoute();
 
   useEffect(() => {
-    dispatch(operations.fetchDisplayContacts());
+    const getUser = async () => await dispatch(opAuth.refresh());
+    getUser().catch(console.error);
   }, [dispatch]);
 
-  return (
-    <div
-      style={{
-        paddingLeft: '20px',
-      }}
-    >
-      <h1>Phonebook</h1>
-      <ContactForm contacts={contacts} onSubmit={submitForm} />
-
-      <h2>Contacts</h2>
-      <Filter filter={filter} onChange={changeFilter} />
-      <ContactList
-        contacts={getFilteredContacts(contacts, filter)}
-        onDeleteContact={deleteContact}
-      />
-      {isLoading && !error && <b>Request in progress...</b>}
-    </div>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/goit-react-hw-08-phonebook" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute
+              redirectTo="/goit-react-hw-08-phonebook/contacts"
+              component={<Register />}
+            />
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute
+              redirectTo="/goit-react-hw-08-phonebook/contacts"
+              component={<Login />}
+            />
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute
+              redirectTo="/goit-react-hw-08-phonebook/login"
+              component={<Contacts />}
+            />
+          }
+        />
+      </Route>
+      <Route path="*" element={<Navigate to="/goit-react-hw-08-phonebook" />} />
+    </Routes>
   );
 };
