@@ -68,31 +68,41 @@ const UserForm = ({ typeOfForm }) => {
         className={css.container + css.form}
       >
         {typeOfForm === 'Register' && (
+          <label className={css.form__label}>
+            Username
+            <input
+              type="text"
+              name="name"
+              title="Your username for this site"
+              onChange={handleChangeUser}
+              value={name}
+              required
+            />
+          </label>
+        )}
+
+        <label className={css.form__label}>
+          Email
           <input
-            type="text"
-            name="name"
-            title="Your username for this site"
+            type="email"
+            name="email"
+            title="Must contain @ and the site, e.g. john.doe@example.com"
             onChange={handleChangeUser}
-            value={name}
+            value={email}
             required
           />
-        )}
-        <input
-          type="email"
-          name="email"
-          title="Must contain @ and the site, e.g. john.doe@example.com"
-          onChange={handleChangeUser}
-          value={email}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          title="Make sure to remember it well."
-          onChange={handleChangeUser}
-          value={password}
-          required
-        />
+        </label>
+        <label className={css.form__label}>
+          Password
+          <input
+            type="password"
+            name="password"
+            title="Make sure to remember it well."
+            onChange={handleChangeUser}
+            value={password}
+            required
+          />
+        </label>
         <button type="submit" className={css.button}>
           {typeOfForm === 'Register' ? typeOfForm : 'Log In'}
         </button>

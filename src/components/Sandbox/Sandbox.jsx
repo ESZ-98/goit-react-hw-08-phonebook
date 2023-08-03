@@ -26,7 +26,7 @@ const Sandbox = () => {
   };
 
   useEffect(() => {
-    dispatch(opSandbox.fetchSandboxToDisplay());
+    dispatch(opSandbox.fetchDisplaySandbox());
   }, [dispatch]);
 
   return (

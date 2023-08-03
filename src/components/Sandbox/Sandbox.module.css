@@ -3,7 +3,8 @@
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 20px;
   max-width: 1000px;
   margin: 0 auto;
 }

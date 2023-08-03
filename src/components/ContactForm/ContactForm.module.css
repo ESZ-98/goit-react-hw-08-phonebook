@@ -1,10 +1,10 @@
 .contact_form {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  align-items: center;
+  width: 400px;
   gap: 10px;
   border: black solid 1px;
-  padding: 5px 150px 5px 5px;
 }
 
 .contact_span {
