@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Input from '../Input/Input';
 import { useDispatch } from 'react-redux';
 import opAuth from '../../redux/auth/opAuth';
 import css from './UserForm.module.css';
@@ -19,7 +20,6 @@ const UserForm = ({ typeOfForm }) => {
       setPassword('');
     }
   };
-
   const handleSubmitReg = (name, email, pass) => {
     if (pass.length < 6) {
       alert('Password must be at least 7 characters long');
@@ -46,8 +46,8 @@ const UserForm = ({ typeOfForm }) => {
     }
   };
 
-  const handleChangeUser = event => {
-    const { name, value } = event.target;
+  const handleChangeUser = e => {
+    const { name, value } = e.target;
     if (name === 'email') {
       setEmail(value);
     } else if (name === 'name') {
@@ -60,49 +60,42 @@ const UserForm = ({ typeOfForm }) => {
   return (
     <>
       <form
-        onSubmit={e => {
-          e.preventDefault();
+        onSubmit={event => {
+          event.preventDefault();
           handleSubmit(typeOfForm, name, email, password);
           formReset();
         }}
         className={css.container + css.form}
       >
         {typeOfForm === 'Register' && (
-          <label className={css.form__label}>
-            Username
-            <input
-              type="text"
-              name="name"
-              title="Your username for this site"
-              onChange={handleChangeUser}
-              value={name}
-              required
-            />
-          </label>
+          <Input
+            label="Username"
+            type="text"
+            dataName="name"
+            title="Your username for this site"
+            required
+            functionChange={handleChangeUser}
+            stateField={name}
+          />
         )}
-
-        <label className={css.form__label}>
-          Email
-          <input
-            type="email"
-            name="email"
-            title="Must contain @ and the site, e.g. john.doe@example.com"
-            onChange={handleChangeUser}
-            value={email}
-            required
-          />
-        </label>
-        <label className={css.form__label}>
-          Password
-          <input
-            type="password"
-            name="password"
-            title="Make sure to remember it well."
-            onChange={handleChangeUser}
-            value={password}
-            required
-          />
-        </label>
+        <Input
+          label="Email"
+          type="email"
+          dataName="email"
+          title="Must contain @ and the site, e.g. john.doe@example.com"
+          required
+          functionChange={handleChangeUser}
+          stateField={email}
+        />
+        <Input
+          label="Password"
+          type="password"
+          dataName="password"
+          title="Make sure to remember it well."
+          required
+          functionChange={handleChangeUser}
+          stateField={password}
+        />
         <button type="submit" className={css.button}>
           {typeOfForm === 'Register' ? typeOfForm : 'Log In'}
         </button>
@@ -110,5 +103,4 @@ const UserForm = ({ typeOfForm }) => {
     </>
   );
 };
-
 export default UserForm;

@@ -1,0 +1,20 @@
+.form {
+  border-radius: 3px;
+  padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(236, 165, 83);
+  color: antiquewhite;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.form_label {
+  font-size: 20px;
+  font-weight: bold;
+  color: brown;
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}

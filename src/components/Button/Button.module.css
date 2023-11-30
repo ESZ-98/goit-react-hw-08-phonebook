@@ -1,0 +1,12 @@
+.button {
+  border-radius: 2px;
+  border: 2px solid brown;
+  background-color: rgb(245, 195, 154);
+  color: brown;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.button:active {
+  background-color: cadetblue;
+}

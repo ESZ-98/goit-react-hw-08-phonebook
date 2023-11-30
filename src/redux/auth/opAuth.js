@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import api, { getPromiseData } from '../../js/apiUrl';
+import api, { getPromiseData } from '../../js/api';
 
 const register = createAsyncThunk('users/signup', async (regCred, thunkAPI) => {
   try {

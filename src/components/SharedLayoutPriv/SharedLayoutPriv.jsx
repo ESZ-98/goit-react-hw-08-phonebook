@@ -1,9 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { useAuthRoute } from 'hook/useAuthRoute';
-import opAuth from 'redux/auth/opAuth';
 import css from '../SharedLayout/SharedLayout.module.css';
+import { useAuthRoute } from 'hook/useAuthRoute';
+import Button from '../Button/Button';
+import { useDispatch } from 'react-redux';
+import opAuth from '../../redux/auth/opAuth';
+import { NavLink } from 'react-router-dom';
 
 const SharedLayoutPriv = () => {
   const dispatch = useDispatch();
@@ -27,9 +28,11 @@ const SharedLayoutPriv = () => {
       </div>
       <div className={css.header_sub}>
         <p className={css.header_link}>{user.email}</p>
-        <button type="button" onClick={buttonHandler}>
-          Log out
-        </button>
+        <Button
+          label="Logout"
+          typeOfButton="button"
+          buttonFunction={() => buttonHandler()}
+        />
       </div>
     </>
   );

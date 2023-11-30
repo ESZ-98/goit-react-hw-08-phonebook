@@ -5,8 +5,8 @@ const initialState = {
   user: { name: null, email: null },
   token: null,
   isLoggedIn: false,
-  isRefreshing: false,
   isChecking: false,
+  isRefreshing: false,
   error: null,
 };
 
@@ -27,9 +27,8 @@ const handlePartlyFulfilled = state => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: builder => {
+  extraReducers: builder =>
     builder
-
       .addCase(opAuth.register.pending, handlePending)
       .addCase(opAuth.register.fulfilled, (state, action) => {
         handlePartlyFulfilled(state);
@@ -58,14 +57,13 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(opAuth.refresh.fulfilled, (state, action) => {
-        state.user = action.payload;
         state.isChecking = false;
+        state.user = action.payload;
         state.isLoggedIn = true;
       })
       .addCase(opAuth.refresh.rejected, handleRejected, (state, action) => {
         state.isRefreshing = false;
-      });
-  },
+      }),
 });
 
 export const authReducer = authSlice.reducer;

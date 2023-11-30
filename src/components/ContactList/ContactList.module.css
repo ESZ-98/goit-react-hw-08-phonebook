@@ -1,4 +1,33 @@
-.contact_list {
-  margin: 0;
-  padding-left: 40px;
+.contactList {
+  padding: 6px;
+  background-color: rgb(236, 165, 83);
+  border-radius: 3px;
+}
+
+.contactList_item {
+  list-style-type: none;
+  border-top: 1px solid rgb(236, 165, 83);
+  border-bottom: 1px solid rgb(236, 165, 83);
+  font-weight: bold;
+  color: antiquewhite;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contactList_name {
+  flex: 1;
+}
+
+.contactList_number {
+  text-align: center;
+  flex: 2;
+}
+
+.contactList_item:first-child {
+  border-top: 0px;
+}
+
+.contactList_item:last-child {
+  border-bottom: 0px;
 }
